@@ -4,7 +4,7 @@ import '../../shared/model/base_model.dart';
 
 part 'workspace_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Workspace extends BaseModel {
   const Workspace({
     required super.id,

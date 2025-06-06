@@ -4,13 +4,13 @@ import '../../shared/model/base_model.dart';
 
 part 'task_column_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class TaskColumn extends BaseModel {
   const TaskColumn({
     required super.id,
     required this.name,
     required this.workspace,
-    required this.order,
+    required this.orderIndex,
     super.dateCreated,
     super.lastUpdated,
   });
@@ -20,7 +20,7 @@ class TaskColumn extends BaseModel {
 
   final String name;
   final String workspace;
-  final int order;
+  final int orderIndex;
 
   Map<String, dynamic> toJson() => _$TaskColumnToJson(this);
 

@@ -11,7 +11,7 @@ class CommentRepository extends BaseRepository {
 
     database.execute(
       '''
-      INSERT INTO comments (id, task, author, content, dateCreated)
+      INSERT INTO comments (id, task, author, content, date_created)
       VALUES (?, ?, ?, ?, ?)
     ''',
       [id, dto.task, dto.author, dto.content, dateCreated.toIso8601String()],
@@ -29,7 +29,7 @@ class CommentRepository extends BaseRepository {
   Future<List<Comment>> getCommentsByTaskId(String task) async {
     final result = database.select(
       '''
-      SELECT * FROM comments WHERE task = ? ORDER BY created_at DESC
+      SELECT * FROM comments WHERE task = ? ORDER BY date_created DESC
     ''',
       [task],
     );

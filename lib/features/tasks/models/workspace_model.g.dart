@@ -13,18 +13,18 @@ Workspace _$WorkspaceFromJson(Map<String, dynamic> json) => Workspace(
       user: json['user'] as String,
       members:
           (json['members'] as List<dynamic>).map((e) => e as String).toList(),
-      dateCreated: json['dateCreated'] == null
+      dateCreated: json['date_created'] == null
           ? null
-          : DateTime.parse(json['dateCreated'] as String),
-      lastUpdated: json['lastUpdated'] == null
+          : DateTime.parse(json['date_created'] as String),
+      lastUpdated: json['last_updated'] == null
           ? null
-          : DateTime.parse(json['lastUpdated'] as String),
+          : DateTime.parse(json['last_updated'] as String),
     );
 
 Map<String, dynamic> _$WorkspaceToJson(Workspace instance) => <String, dynamic>{
       'id': instance.id,
-      'dateCreated': instance.dateCreated?.toIso8601String(),
-      'lastUpdated': instance.lastUpdated?.toIso8601String(),
+      'date_created': instance.dateCreated?.toIso8601String(),
+      'last_updated': instance.lastUpdated?.toIso8601String(),
       'name': instance.name,
       'description': instance.description,
       'user': instance.user,

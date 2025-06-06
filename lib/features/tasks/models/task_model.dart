@@ -4,7 +4,7 @@ import '../../shared/model/base_model.dart';
 
 part 'task_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Task extends BaseModel {
   const Task({
     required super.id,

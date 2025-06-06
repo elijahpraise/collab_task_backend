@@ -17,8 +17,9 @@ class UserRepository extends BaseRepository {
       final id = DateTime.now().millisecondsSinceEpoch.toString();
       final passwordHash = _hashPassword(dto.password);
       final dateCreated = DateTime.now();
+      final lastUpdated = DateTime.now();
       database.execute('''
-        INSERT INTO users (id, email, password_hash, username, dateCreated)
+        INSERT INTO users (id, email, password_hash, username, date_created, last_updated)
         VALUES (?, ?, ?, ?, ?)
       ''', [
         id,
@@ -26,6 +27,7 @@ class UserRepository extends BaseRepository {
         passwordHash,
         dto.username,
         dateCreated.toIso8601String(),
+        lastUpdated.toIso8601String(),
       ]);
 
       return User(

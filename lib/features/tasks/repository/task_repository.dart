@@ -14,14 +14,14 @@ class TaskRepository extends BaseRepository {
     // Get next order
     final orderResult = database.select(
       '''
-      SELECT MAX(order) as max_order FROM tasks WHERE column = ?
+      SELECT MAX(order_index) as max_order FROM tasks WHERE column = ?
     ''',
       [dto.column],
     );
     final order = (orderResult.first['max_order'] as int? ?? -1) + 1;
 
     database.execute('''
-      INSERT INTO tasks (id, title, description, column, assignee, deadline, tags, order, dateCreated)
+      INSERT INTO tasks (id, title, description, column, assignee, deadline, tags, order_index, date_created)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       id,
@@ -51,7 +51,7 @@ class TaskRepository extends BaseRepository {
   Future<List<Task>> getTasksByColumnId(String columnId) async {
     final result = database.select(
       '''
-      SELECT * FROM tasks WHERE column = ? ORDER BY order
+      SELECT * FROM tasks WHERE column = ? ORDER BY order_index
     ''',
       [columnId],
     );

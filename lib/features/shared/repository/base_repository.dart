@@ -25,9 +25,9 @@ abstract class BaseRepository {
         id TEXT PRIMARY KEY,
         email TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
-        username TEXT NOT NULL,
-        dateCreated TEXT,
-        lastUpdated TEXT,
+        username TEXT,
+        date_created TEXT,
+        last_updated TEXT
       )
     ''')
       ..execute('''
@@ -35,11 +35,11 @@ abstract class BaseRepository {
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         description TEXT NOT NULL,
-        owner TEXT NOT NULL,
+        user TEXT NOT NULL,
         members TEXT NOT NULL,
-        dateCreated TEXT,
-        lastUpdated TEXT,
-        FOREIGN KEY (owner) REFERENCES users (id)
+        date_created TEXT,
+        last_updated TEXT
+        FOREIGN KEY (user) REFERENCES users (id)
       )
     ''')
       ..execute('''
@@ -47,9 +47,9 @@ abstract class BaseRepository {
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         workspace TEXT NOT NULL,
-        order INTEGER NOT NULL,
-        dateCreated TEXT,
-        lastUpdated TEXT,
+        order_index INTEGER NOT NULL,
+        date_created TEXT,
+        last_updated TEXT
         FOREIGN KEY (workspace) REFERENCES workspaces (id)
       )
     ''')
@@ -62,9 +62,9 @@ abstract class BaseRepository {
         assignee TEXT NOT NULL,
         deadline TEXT,
         tags TEXT NOT NULL,
-        order INTEGER NOT NULL,
-        dateCreated TEXT,
-        lastUpdated TEXT,
+        order_index INTEGER NOT NULL,
+        date_created TEXT,
+        last_updated TEXT
         FOREIGN KEY (column) REFERENCES columns (id),
         FOREIGN KEY (assignee) REFERENCES users (id)
       )
@@ -75,8 +75,8 @@ abstract class BaseRepository {
         task TEXT NOT NULL,
         author TEXT NOT NULL,
         content TEXT NOT NULL,
-        dateCreated TEXT,
-        lastUpdated TEXT,
+        date_created TEXT,
+        last_updated TEXT
         FOREIGN KEY (task) REFERENCES tasks (id),
         FOREIGN KEY (author) REFERENCES users (id)
       )

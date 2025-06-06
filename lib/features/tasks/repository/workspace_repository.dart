@@ -14,7 +14,7 @@ class WorkspaceRepository extends BaseRepository {
     final members = [dto.user];
 
     database.execute('''
-      INSERT INTO workspaces (id, name, description, user, members, dateCreated)
+      INSERT INTO workspaces (id, name, description, user, members, date_created)
       VALUES (?, ?, ?, ?, ?, ?)
     ''', [
       id,
@@ -22,7 +22,7 @@ class WorkspaceRepository extends BaseRepository {
       dto.description,
       dto.user,
       jsonEncode(members),
-      dateCreated.toIso8601String()
+      dateCreated.toIso8601String(),
     ]);
 
     return Workspace(
@@ -36,9 +36,12 @@ class WorkspaceRepository extends BaseRepository {
   }
 
   Future<List<Workspace>> getWorkspacesByUserId(String userId) async {
-    final result = database.select('''
-      SELECT * FROM workspaces WHERE owner_id = ? OR member_ids LIKE ?
-    ''', [userId, '%"$userId"%']);
+    final result = database.select(
+      '''
+      SELECT * FROM workspaces WHERE owner = ? OR members LIKE ?
+    ''',
+      [userId, '%"$userId"%'],
+    );
 
     return result.map((row) => row.workspace).toList();
   }
@@ -56,7 +59,7 @@ class WorkspaceRepository extends BaseRepository {
     final lastUpdated = DateTime.now();
     database.execute(
       '''
-      UPDATE workspaces SET name = ?, description = ? lastUpdated = ? WHERE id = ?
+      UPDATE workspaces SET name = ?, description = ? last_updated = ? WHERE id = ?
     ''',
       [dto.name, dto.description, lastUpdated.toIso8601String(), dto.id],
     );

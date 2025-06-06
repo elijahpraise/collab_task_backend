@@ -1,10 +1,9 @@
+import 'package:collab_task_backend/features/shared/model/base_model.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../shared/model/base_model.dart';
 
 part 'comment_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Comment extends BaseModel {
   const Comment({
     required super.id,

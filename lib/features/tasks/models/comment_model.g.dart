@@ -11,18 +11,18 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
       task: json['task'] as String,
       author: json['author'] as String,
       content: json['content'] as String,
-      dateCreated: json['dateCreated'] == null
+      dateCreated: json['date_created'] == null
           ? null
-          : DateTime.parse(json['dateCreated'] as String),
-      lastUpdated: json['lastUpdated'] == null
+          : DateTime.parse(json['date_created'] as String),
+      lastUpdated: json['last_updated'] == null
           ? null
-          : DateTime.parse(json['lastUpdated'] as String),
+          : DateTime.parse(json['last_updated'] as String),
     );
 
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'id': instance.id,
-      'dateCreated': instance.dateCreated?.toIso8601String(),
-      'lastUpdated': instance.lastUpdated?.toIso8601String(),
+      'date_created': instance.dateCreated?.toIso8601String(),
+      'last_updated': instance.lastUpdated?.toIso8601String(),
       'task': instance.task,
       'author': instance.author,
       'content': instance.content,

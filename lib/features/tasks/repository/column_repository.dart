@@ -12,25 +12,25 @@ class ColumnRepository extends BaseRepository {
     // Get next order
     final orderResult = database.select(
       '''
-      SELECT MAX(order) as max_order FROM columns WHERE workspace = ?
+      SELECT MAX(order_index) as max_order FROM columns WHERE workspace = ?
     ''',
       [dto.workspace],
     );
-    final order = (orderResult.first['max_order'] as int? ?? -1) + 1;
+    final orderIndex = (orderResult.first['max_order'] as int? ?? -1) + 1;
 
     database.execute(
       '''
-      INSERT INTO columns (id, name, workspace, order, dateCreated)
+      INSERT INTO columns (id, name, workspace, order_index, date_created)
       VALUES (?, ?, ?, ?, ?)
     ''',
-      [id, dto.name, dto.workspace, order, dateCreated.toIso8601String()],
+      [id, dto.name, dto.workspace, orderIndex, dateCreated.toIso8601String()],
     );
 
     return TaskColumn(
       id: id,
       name: dto.name,
       workspace: dto.workspace,
-      order: order,
+      orderIndex: orderIndex,
       dateCreated: dateCreated,
     );
   }
@@ -38,7 +38,7 @@ class ColumnRepository extends BaseRepository {
   Future<List<TaskColumn>> getColumnsByWorkspaceId(String workspaceId) async {
     final result = database.select(
       '''
-      SELECT * FROM columns WHERE workspace = ? ORDER BY order
+      SELECT * FROM columns WHERE workspace = ? ORDER BY order_index
     ''',
       [workspaceId],
     );
@@ -49,7 +49,7 @@ class ColumnRepository extends BaseRepository {
   Future<TaskColumn?> updateColumn(UpdateColumnDto dto) async {
     final lastUpdated = DateTime.now();
     database.execute(
-      'UPDATE columns SET name = ? lastUpdated = ? WHERE id = ?',
+      'UPDATE columns SET name = ? last_updated = ? WHERE id = ?',
       [dto.name, lastUpdated, dto.id],
     );
 
